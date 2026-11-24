@@ -1,0 +1,25 @@
+
+/* Физмат v2: режим тренировок и аккуратная математическая верстка */
+.v2-options{display:flex;gap:12px;align-items:end;flex-wrap:wrap;margin:12px 0}
+.v2-options label{display:grid;gap:5px;font-size:13px;font-weight:700;color:#345979}
+.v2-options select{min-width:125px}
+.v2-progress{padding:14px 16px;margin:0 0 14px;background:#e6f7ff;border:1px solid #b1daf0;border-radius:12px}
+.v2-info{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-weight:700;color:#12689b}
+.v2-meter{height:9px;background:#c8e8f9;border-radius:99px;margin-top:9px;overflow:hidden}
+.v2-meter>div{height:100%;background:#12a1cf;transition:width .2s}
+.v2-source{margin:8px 0 13px;font-size:13px;color:#517791}
+.v2-source a{color:#076fae}
+.v2-root{display:inline-flex;align-items:baseline;vertical-align:middle}
+.v2-root .v2-radicand{border-top:2px solid currentColor;padding:0 .12em}
+.v2-root .v2-sign{font-size:1.25em}
+.v2-system{display:inline-flex;align-items:center;justify-content:center;gap:8px;max-width:100%;line-height:1.4}
+.v2-sysbrace{font-family:Georgia,serif;font-size:3.5em;font-weight:300;line-height:1}
+.v2-syslines{display:flex;flex-direction:column;text-align:left;font-size:.9em}
+.v2-explain{font-size:16px;line-height:1.5;margin-top:12px}
+#question{line-height:1.6;overflow-wrap:normal}
+#question .math-frac{display:inline-flex;vertical-align:middle;font-size:.98em}
+#question .math-frac-num{border-bottom:2.5px solid currentColor}
+.v2-completed{padding:20px;background:#e6faed;border:1px solid #9cddb1;border-radius:14px}
+.v2-completed h3{margin:0 0 10px}
+.v2-completed div{font-family:Inter,Arial,sans-serif;font-size:18px}
+@media(max-width:720px){#question{font-size:22px}.v2-options select{min-width:100px}}
