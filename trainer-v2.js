@@ -5,8 +5,10 @@ const $v=id=>document.getElementById(id),F=window.FizmatBank;
 let questions=[],position=0,score=0,answered=false,completed=false;
 const styleText="Ответы: число (например 2), дробь 1/2, несколько корней через ; или неравенство x>2.";
 function makeHTML(text){
- let s=richMath(text);
+ let prepared=String(text).replace(/√(\d+)\/(\d+)/g,"(√$1)/$2");
+ let s=richMath(prepared);
  s=s.replace(/√\(([^()]+)\)/g,'<span class="v2-root"><span class="v2-sign">√</span><span class="v2-radicand">$1</span></span>');
+ s=s.replace(/√(\d+)/g,'<span class="v2-root"><span class="v2-sign">√</span><span class="v2-radicand">$1</span></span>');
  return s;
 }
 function questionHTML(q){
