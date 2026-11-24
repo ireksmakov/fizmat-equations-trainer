@@ -45,7 +45,7 @@ if(k===8){
  if(d===1){let r=i+2,n=i+3,co=2+i%4,b=n*n-co*r;return item("√("+lin(co,b)+") = "+n,r,"Возведите обе части в квадрат.","x="+r+".",d)}
  let h=1+i%4,r=h+3+i,c=(r-h)*(r-h)-r;return item("√(x"+signed(c)+") = x − "+h,r,"ОДЗ: x≥"+h+".","После проверки x="+r+".",d)
 }
-if(k===9){let base=2+i%3,r=i+1;if(d===0)return item(base+"^x = "+Math.pow(base,r),r,"Приравняйте показатели степеней.","x="+r+".",d);if(d===1){let b=i%4+1,c=i%4+2;return item(base+"^(x−"+b+") = "+Math.pow(base,c),b+c,"Приравняйте показатели.","x="+(b+c)+".",d)}return item("("+base+"²)^x = "+base+"^(x+"+r+")",r,"Представьте левую часть как "+base+"^(2x).","2x=x+"+r+" ⇒ x="+r+".",d)}
+if(k===9){let base=2+i%3,r=i+1;if(d===0)return item(base+"^x = "+Math.pow(base,r),r,"Приравняйте показатели степеней.","x="+r+".",d);if(d===1){let b=i+1,c=i%4+2;return item(base+"^(x−"+b+") = "+Math.pow(base,c),b+c,"Приравняйте показатели.","x="+(b+c)+".",d)}return item("("+base+"²)^x = "+base+"^(x+"+r+")",r,"Представьте левую часть как "+base+"^(2x).","2x=x+"+r+" ⇒ x="+r+".",d)}
 if(k===10){let base=2+i%3,lg="log"+sub(base),r=i+2;
  if(d===0){let pow=1+i%3,c=Math.pow(base,pow)-r;return item(lg+"(x"+signed(c)+") = "+pow,r,"Перейдите к показательной форме.","x="+r+".",d)}
  if(d===1){let co=2+i%3,pow=2+i%2,c=Math.pow(base,pow)-co*r;return item(lg+"("+lin(co,c)+") = "+pow,r,"Аргумент логарифма должен быть положительным.","x="+r+".",d)}
