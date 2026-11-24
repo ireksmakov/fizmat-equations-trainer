@@ -29,6 +29,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
+      - name: Дождаться регистрации артефакта
+        run: sleep 20
       - name: Опубликовать
         id: deployment
         uses: actions/deploy-pages@v4
