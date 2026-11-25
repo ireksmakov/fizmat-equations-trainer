@@ -1,0 +1,28 @@
+name: Проверка математики и интерфейса
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches:
+      - 'audit/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Проверить JavaScript
+        run: |
+          node --check trainer-bank.js
+          node --check trainer-v2.js
+          node --check tests/math-audit.cjs
+          node --check tests/interface-audit.cjs
+      - name: Проверить 675 вариантов и работу тренажёра
+        run: |
+          node tests/math-audit.cjs
+          node tests/interface-audit.cjs

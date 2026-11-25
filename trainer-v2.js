@@ -2,8 +2,8 @@
 "use strict";
 if(!window.FizmatBank){console.error("Не загружен trainer-bank.js");return;}
 const $v=id=>document.getElementById(id),F=window.FizmatBank;
-let questions=[],position=0,score=0,answered=false,completed=false;
-const styleText="Ответы: число (например 2), дробь 1/2, несколько корней через ; или неравенство x>2.";
+let questions=[],position=0,score=0,answered=false,completed=false,wrongAttempts=0;
+const styleText="Ответы: число или дробь (1/2 = 0,5), корни через ;, неравенство x>2 или промежутки (−∞;2) ∪ (3;+∞).";
 function makeHTML(text){
  let prepared=String(text).replace(/√(\d+)\/(\d+)/g,"(√$1)/$2");
  let s=richMath(prepared);
@@ -59,12 +59,13 @@ function show(){
  $v("feedback").textContent="Решите уравнение и нажмите «Проверить».";
  $v("feedback").className="feedback";
  $v("next").textContent=position+1===questions.length?"Завершить тренировку":"Следующее задание →";
- $v("v2-source").innerHTML=t.source?('Источник: <a target="_blank" rel="noopener" href="'+t.source.url+'">'+t.source.name+"</a>"):"";
- answered=false;completed=false;updateProgress(position);
+ $v("v2-source").innerHTML=t.source?('Тип задания и материалы: <a target="_blank" rel="noopener" href="'+t.source.url+'">'+t.source.name+"</a>"):"";
+ answered=false;completed=false;wrongAttempts=0;updateProgress(position);
 }
 function start(){
  const n=Number($v("v2-count").value),level=Number($v("difficulty").value);
- questions=Array.from({length:n},(_,i)=>F.make(topic,level,i));
+ // Новый случайный порядок без повторений внутри одной тренировки.
+ questions=F.pickIndices(n).map(i=>({...F.make(topic,level,i),variantId:i}));
  position=0;score=0;completed=false;topicButtons();show();
 }
 function end(){
@@ -84,13 +85,20 @@ function check(){
  if(!value){$v("feedback").textContent="Сначала введите ответ.";return;}
  const task=questions[position],isRight=F.validate(task.answer,value);
  stats.attempts+=1;stats.correct+=Number(isRight);
- if(isRight){score+=1;stats.done["v2-"+topic+"-"+$v("difficulty").value+"-"+position]=true;}
- stats.history.push({date:new Date().toISOString(),topic:BANK[topic][0],level:Number($v("difficulty").value)+1,answer:value,correct:isRight});
- save();answered=true;
+ if(isRight){
+  score+=1;answered=true;
+  stats.done["v2-"+topic+"-"+$v("difficulty").value+"-"+task.variantId]=true;
+ }else wrongAttempts+=1;
+ stats.history.push({date:new Date().toISOString(),topic:BANK[topic][0],
+  level:Number($v("difficulty").value)+1,variant:task.variantId+1,
+  answer:value,correct:isRight});
+ save();
  $v("feedback").className="feedback "+(isRight?"good":"bad");
- $v("feedback").textContent=isRight?"Правильно! Можно переходить к следующему заданию.":"Неверно. Посмотрите подсказку или разбор, затем перейдите к следующему.";
- $v("check").disabled=true;
- updateProgress(position+1);
+ $v("feedback").textContent=isRight
+  ?(wrongAttempts?"Верно после исправления! Можете переходить к следующему заданию.":"Правильно! Можно переходить к следующему заданию.")
+  :"Неверно. Проверьте ответ, исправьте его и попробуйте ещё раз — либо откройте подсказку или разбор.";
+ $v("check").disabled=isRight;
+ updateProgress(position+(isRight?1:0));
 }
 $v("v2-start").onclick=start;
 $v("v2-count").onchange=start;

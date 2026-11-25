@@ -23,6 +23,14 @@ jobs:
     steps:
       - name: Получить исходный код
         uses: actions/checkout@v4
+      - name: Проверить JavaScript и математическую правильность
+        run: |
+          node --check trainer-bank.js
+          node --check trainer-v2.js
+          node --check tests/math-audit.cjs
+          node --check tests/interface-audit.cjs
+          node tests/math-audit.cjs
+          node tests/interface-audit.cjs
       - name: Настроить GitHub Pages
         uses: actions/configure-pages@v5
       - name: Подготовить статический сайт
