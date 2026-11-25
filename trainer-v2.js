@@ -3,7 +3,7 @@
 if(!window.FizmatBank){console.error("Не загружен trainer-bank.js");return;}
 const $v=id=>document.getElementById(id),F=window.FizmatBank;
 let questions=[],position=0,score=0,answered=false,completed=false,wrongAttempts=0;
-const styleText="Ответы: число (например 2), дробь 1/2, несколько корней через ; или неравенство x>2.";
+const styleText="Ответы: число или дробь (1/2 = 0,5), корни через ;, неравенство x>2 или промежутки (−∞;2) ∪ (3;+∞).";
 function makeHTML(text){
  let prepared=String(text).replace(/√(\d+)\/(\d+)/g,"(√$1)/$2");
  let s=richMath(prepared);
@@ -59,7 +59,7 @@ function show(){
  $v("feedback").textContent="Решите уравнение и нажмите «Проверить».";
  $v("feedback").className="feedback";
  $v("next").textContent=position+1===questions.length?"Завершить тренировку":"Следующее задание →";
- $v("v2-source").innerHTML=t.source?('Источник: <a target="_blank" rel="noopener" href="'+t.source.url+'">'+t.source.name+"</a>"):"";
+ $v("v2-source").innerHTML=t.source?('Тип задания и материалы: <a target="_blank" rel="noopener" href="'+t.source.url+'">'+t.source.name+"</a>"):"";
  answered=false;completed=false;wrongAttempts=0;updateProgress(position);
 }
 function start(){
